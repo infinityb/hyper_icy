@@ -23,3 +23,7 @@ fn icy_handler(req: Request, mut res: Response<Fresh>) {
     // ...
 }
 ```
+
+## License
+
+[MIT](./LICENSE)
