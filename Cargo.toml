@@ -1,6 +1,6 @@
 [package]
 name = "hyper_icy"
-version = "0.3.0"
+version = "0.6.0"
 authors = ["Stacey Ell <stacey.ell@gmail.com>"]
 
 [dependencies]

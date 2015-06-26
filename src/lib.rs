@@ -3,6 +3,7 @@
 extern crate hyper;
 
 use std::fmt;
+use hyper::error::Result as HyperResult;
 use hyper::header::{parsing, Header, HeaderFormat};
 
 
@@ -19,9 +20,9 @@ impl Header for IcyMetaData {
         "Icy-MetaData"
     }
 
-    fn parse_header(raw: &[Vec<u8>]) -> Option<Self> {
-        let parsed: Option<u32> = parsing::from_one_raw_str(raw);
-        parsed.and_then(|num| Some(IcyMetaData(num > 0)))
+    fn parse_header(raw: &[Vec<u8>]) -> HyperResult<Self> {
+        let parsed: u32 = try!(parsing::from_one_raw_str(raw));
+        Ok(IcyMetaData(parsed > 0))
     }
 }
 
@@ -34,9 +35,8 @@ impl HeaderFormat for IcyMetaData {
     }
 }
 
-#[allow(non_snake_case)]
 #[cfg(test)]
-mod IcyMetaData {
+mod icy_meta_data {
     mod tests {
         use hyper::header::{Header, HeaderFormatter};
         use super::super::IcyMetaData;
@@ -98,7 +98,7 @@ impl Header for IcyMetaInt {
         "icy-metaint"
     }
 
-    fn parse_header(raw: &[Vec<u8>]) -> Option<Self> {
+    fn parse_header(raw: &[Vec<u8>]) -> HyperResult<Self> {
         parsing::from_one_raw_str(raw).map(IcyMetaInt)
     }
 }
@@ -113,7 +113,7 @@ impl HeaderFormat for IcyMetaInt {
 
 #[allow(non_snake_case)]
 #[cfg(test)]
-mod IcyMetaInt {
+mod icy_meta_int {
     mod tests {
         use hyper::header::{Header, HeaderFormatter};
         use super::super::IcyMetaInt;
@@ -160,3 +160,4 @@ mod IcyMetaInt {
         }
     }
 }
+
